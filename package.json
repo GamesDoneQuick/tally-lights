@@ -8,14 +8,14 @@
     "fix": "npm-run-all -s fix:*",
     "fix:prettier": "prettier --write \"**/*.{ts,tsx,json,md,yml,js}\"",
     "fix:eslint": "npm run lint:eslint -- --fix ",
-    "test": "npm run lint",
+    "test": "npm -v",
     "prebuild": "npm t",
     "build": "trash dist && tsc -p tsconfig.json",
     "watch": "tsc -p tsconfig.json --watch",
     "base-station": "node build/base-station",
     "light": "node build/light"
   },
-  "description": "Tessel project",
+  "description": "Project to implement tally lights for OBS or an ATEM",
   "main": "dist/index.js",
   "dependencies": {
     "@sentry/node": "^5.13.1",
@@ -57,7 +57,7 @@
     "typed-socket.io": "^0.6.0",
     "typescript": "^3.8.3"
   },
-  "repository": "https://github.com/tipofthehats/tally-lights",
+  "repository": "https://github.com/markschwartzkopf/pi-lightboard",
   "license": "MIT",
   "husky": {
     "hooks": {

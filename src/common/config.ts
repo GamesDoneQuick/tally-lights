@@ -52,7 +52,7 @@ const conf = convict({
 		ip: {
 			doc: 'The IP address of the ATEM.',
 			format: 'ipaddress',
-			default: '192.168.1.5',
+			default: '172.19.1.107',
 			env: 'ATEM_IP',
 		},
 		tallyMapping: {

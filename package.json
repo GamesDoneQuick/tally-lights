@@ -4,10 +4,8 @@
   "scripts": {
     "lint": "npm-run-all -s lint:*",
     "lint:prettier": "prettier --list-different \"**/*.{ts,tsx,json,md,yml,js}\"",
-    "lint:eslint": "eslint \"./**/*.{ts,tsx}\"",
     "fix": "npm-run-all -s fix:*",
     "fix:prettier": "prettier --write \"**/*.{ts,tsx,json,md,yml,js}\"",
-    "fix:eslint": "npm run lint:eslint -- --fix ",
     "test": "npm -v",
     "prebuild": "npm t",
     "build": "trash dist && tsc -p tsconfig.json",
@@ -58,20 +56,5 @@
     "typescript": "^3.8.3"
   },
   "repository": "https://github.com/markschwartzkopf/pi-lightboard",
-  "license": "MIT",
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
-  "lint-staged": {
-    "*.{ts,tsx,json,md,yml,js}": [
-      "prettier --write",
-      "git add"
-    ],
-    "*.{ts,tsx}": [
-      "eslint --fix",
-      "git add"
-    ]
-  }
+  "license": "MIT"
 }

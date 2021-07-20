@@ -18,7 +18,7 @@ const conf = convict({
 		ip: {
 			doc: 'The IP address of the base station, so that the lights know where to find it.',
 			format: 'ipaddress',
-			default: '172.16.0.1',
+			default: '192.168.1.1',
 			env: 'BASE_STATION_IP',
 		},
 		port: {

@@ -26,40 +26,7 @@
     -   `tar xvfJ node-v14.17.3-linux-armv6l.tar.xz`
     -   `sudo cp -R node-v14.17.3-linux-armv6l/* /usr/local`
     -   Reboot `sudo shutdown -r now`
--   Update pi software: `sudo apt update && sudo apt full-upgrade -y`
--   For base station only, set up wireless hotspot:
-
-    -   `sudo apt install hostapd`
-    -   `sudo systemctl unmask hostapd`
-    -   `sudo systemctl enable hostapd`
-    -   `sudo apt install dnsmasq`
-    -   `sudo nano /etc/dhcpcd.conf` and add:
-
-            interface wlan0
-            static ip_address=192.168.1.1/24
-            nohook wpa_supplicant
-
-    -   `sudo mv /etc/dnsmasq.conf /etc/dnsmasq.conf.orig`
-    -   `sudo nano /etc/dnsmasq.conf` and paste in:
-
-            interface=wlan0
-            dhcp-range=192.168.1.2,192.168.1.20,255.255.255.0,24h
-
-    -   `sudo nano /etc/hostapd/hostapd.conf` and paste in:
-
-            interface=wlan0
-            ssid=TallyNet
-            hw_mode=a
-            channel=0
-            macaddr_acl=0
-            auth_algs=1
-            ignore_broadcast_ssid=0
-            wpa=2
-            wpa_passphrase=TallyRania
-            wpa_key_mgmt=WPA-PSK
-            wpa_pairwise=TKIP
-            rsn_pairwise=CCMP
-
+-   Update pi software: `sudo apt update && sudo apt full-upgrade -y
 -   Install and configure git:
     -   `sudo apt install -y git`
     -   `git config --global user.email "<github email address>"`
@@ -75,11 +42,45 @@
     -   Setup to run pm2 from root (root privileges are needed to access GPIO)
         -   `pm2 kill`
         -   `sudo pm2 start api`
-    -   `sudo pm2 start tally.config.js`
-    -   `sudo pm2 save`
-    -   `sudo pm2 startup`
+        -   `sudo pm2 start tally.config.js`
+        -   `sudo pm2 save`
+        -   `sudo pm2 startup`
+    -   `sudo raspi-config` and add in SSID and password of the base station Pi
+    -   `sudo nano /etc/wpa_supplicant/wpa_supplicant.conf` and comment out or delete the SSID with internet
 -   For base-station pi:
-    -   `pm2 start base.config.js`
-    -   `pm2 save`
-    -   `pm2 startup`
-    -   Enter the command as prompted by pm2: `sudo env PATH=$PATH:/usr/bin /usr/lib/node_modules/pm2/bin/pm2 startup systemd -u pi --hp /home/pi`
+    -   Setup pm2
+        -   `pm2 start base.config.js`
+        -   `pm2 save`
+        -   `pm2 startup`
+        -   Enter the command as prompted by pm2: `sudo env PATH=$PATH:/usr/bin /usr/lib/node_modules/pm2/bin/pm2 startup systemd -u pi --hp /home/pi`
+    -   Setup wifi hotspot
+        -   `sudo apt install hostapd`
+        -   `sudo systemctl unmask hostapd`
+        -   `sudo systemctl enable hostapd`
+        -   `sudo apt install dnsmasq`
+        -   `sudo nano /etc/dhcpcd.conf` and add:
+
+                interface wlan0
+                static ip_address=192.168.1.1/24
+                nohook wpa_supplicant
+
+        -   `sudo mv /etc/dnsmasq.conf /etc/dnsmasq.conf.orig`
+        -   `sudo nano /etc/dnsmasq.conf` and paste in:
+
+                interface=wlan0
+                dhcp-range=192.168.1.2,192.168.1.20,255.255.255.0,24h
+
+        -   `sudo nano /etc/hostapd/hostapd.conf` and paste in:
+
+                interface=wlan0
+                ssid=TallyNet
+                hw_mode=a
+                channel=0
+                macaddr_acl=0
+                auth_algs=1
+                ignore_broadcast_ssid=0
+                wpa=2
+                wpa_passphrase=TallyRania
+                wpa_key_mgmt=WPA-PSK
+                wpa_pairwise=TKIP
+                rsn_pairwise=CCMP
